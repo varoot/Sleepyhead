@@ -32,7 +32,7 @@
 		}
 		
 		$(function() {
-			$("input[id|=date]").scroller({ preset: 'datetime' });
+			$("input[id|=date]").scroller({ preset: 'datetime', theme: 'ios' });
 			$("#activity").change(function() {
 				if ($(this).children('option[selected]').eq(0).hasClass('duration')) {
 					$("#input-date-end").show();
