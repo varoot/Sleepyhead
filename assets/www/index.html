@@ -45,15 +45,12 @@
 		
 		
 		// file writing
-		function onDeviceReady() {
-		    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-		}
 		
 		var contentToWrite = "";
 		
 		function MyWriteToCSV( myString ){
 			contentToWrite = myString;
-			
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 		}
 		
 		function gotFS(fileSystem) {
