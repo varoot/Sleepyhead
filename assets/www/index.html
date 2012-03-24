@@ -49,20 +49,21 @@
 			var activityList = document.all("activity");
 			var activityText = activityList.options[activityList.selectedIndex].text;
 			
-			alert(activityText);
+			//alert(activityText);
 			
 			var startDateText = document.getElementById('date-start').value;
 			
-			alert(startDateText);
+			//alert(startDateText);
 			
 			var endDateText = document.getElementById('date-end').value;
 			
+			//alert(endDateText);
 			
 			var noteText = document.getElementById('note').value;
 			
-			alert(noteText);
+			//alert(noteText);
 			
-			alert(activityText + "\n" + startDateText + "\n" + endDateText + "\n" + noteText);
+			//alert(activityText + "\n" + startDateText + "\n" + endDateText + "\n" + noteText);
 			
 			
 			MyWriteToFile(activityText + "," + startDateText + "," + endDateText + "," + noteText + "\n");
@@ -75,11 +76,30 @@
 		
 		function MyWriteToFile( myString ){
 			contentToWrite = myString;
+			
+			// the folder
+			//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFolder, fail);
+			
+			// the file
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 		}
 		
+		// for folder
+		function successDirectory(parent) {
+		    console.log("Parent Name: " + parent.name);
+		}
+
+		function failDirectory(error) {
+		    alert("Unable to create new directory: " + error.code);
+		}
+
+		// Retrieve an existing directory, or create it if it does not already exist
+
 		function gotFS(fileSystem) {
-		    fileSystem.root.getFile("sleepyhead_record.csv", {create: true, exclusive: false}, gotFileEntry, fail);
+			
+			fileSystem.root.getDirectory("SleepyHead", {create: true, exclusive: false}, successDirectory, failDirectory);
+			
+		    fileSystem.root.getFile("SleepyHead/sleepyhead_record.csv", {create: true, exclusive: false}, gotFileEntry, fail);
 		}
 		
 		function gotFileEntry(fileEntry) {
@@ -91,10 +111,11 @@
 		        console.log("write success");
 		    };
 		    writer.seek(writer.length);
-		    writer.write("appended text");
+		    writer.write(contentToWrite);
 		}
 		
 		function fail(error) {
+			alert("getFileFail:" + error);
 		    console.log(error.code);
 		}
 	</script>
