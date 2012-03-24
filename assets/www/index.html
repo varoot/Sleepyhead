@@ -42,6 +42,32 @@
 			});
 		});
 		
+		// write the input to file
+		function doSubmit(){
+			
+			
+			var activityList = document.all("activity");
+			var activityText = activityList.options[activityList.selectedIndex].text;
+			
+			alert(activityText);
+			
+			var startDateText = document.getElementById('date-start').value;
+			
+			alert(startDateText);
+			
+			var endDateText = document.getElementById('date-end').value;
+			
+			alert(endDateText);
+			
+			var noteText = document.getElementById('note').value;
+			
+			alert(noteText);
+			
+			alert(activityText + "\n" + startDateText + "\n" + endDateText + "\n" + noteText);
+			
+			
+			
+		}
 		
 		
 		// file writing
@@ -62,19 +88,11 @@
 		}
 		
 		function gotFileWriter(writer) {
-		    writer.onwriteend = function(evt) {
-		        console.log("contents of file now 'some sample text'");
-		        writer.truncate(11);  
-		        writer.onwriteend = function(evt) {
-		            console.log("contents of file now 'some sample'");
-		            writer.seek(4);
-		            writer.write(" different text");
-		            writer.onwriteend = function(evt){
-		                console.log("contents of file now 'some different text'");
-		            }
-		        };
+		    writer.onwrite = function(evt) {
+		        console.log("write success");
 		    };
-		    writer.write("some sample text");
+		    writer.seek(writer.length);
+		    writer.write("appended text");
 		}
 		
 		function fail(error) {
@@ -121,9 +139,9 @@
 				</div>
 				<div data-role="fieldcontain">
 					<label for="note">Note</label>
-					<textarea></textarea>
+					<textarea id="note"></textarea>
 				</div>
-				<input data-theme="b" value="Submit" type="submit">
+				<input data-theme="b" value="Submit" type="submit" onClick="return doSubmit();">
 			</form>
 		</div>
 	</div>
