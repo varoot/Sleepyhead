@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+	<title>Sleepyhead - Visualization</title>
+	<link rel="stylesheet" href="jquery.mobile-1.0.1.min.css">
+	<link rel="stylesheet" href="mobiscroll-1.5.3.min.css">
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript" charset="utf-8" src="js/phonegap-1.4.1.js"></script>
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.0.1.min.js"></script>
+    <script type="text/javascript" src="js/mobiscroll-1.5.3.min.js"></script>
+	<script type="text/javascript" src="js/processing-1.3.6.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		document.addEventListener("deviceready", onDeviceReady, false);
+		var db;
+		
+		function createDB(tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS data (id unique, name)');
+		}
+		
+		function errorCB(err) {
+			alert('Error: '+err);
+		}
+
+		function successCB() {
+			//alert('Success');
+		}
+
+		// PhoneGap is ready
+		function onDeviceReady() {
+			db = window.openDatabase("sleepyhead", "1.0", "Sleepyhead DB", 1000000);
+			db.transaction(createDB, errorCB, successCB);
+		}
+	</script>
+</head>
+<body>
+	<div data-role="page" id="page1">
+		<div data-theme="a" data-role="header" data-position="fixed">
+			<h3>
+				Sleepyhead App
+			</h3>
+		</div>
+		<div data-role="content">
+			<canvas data-processing-sources="chart.pde"></canvas>
+		</div>
+	</div>
+</body>
+</html>
