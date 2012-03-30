@@ -69,6 +69,19 @@
 			MyWriteToFile(activityText + "," + startDateText + "," + endDateText + "," + noteText + "\n");
 		}
 		
+		function doSomething ( )
+		{
+		      var d = new Date();
+		      //navigator.notification.alert("Timer: " + d.toString());
+		      navigator.app.loadUrl("file:///android_asset/www/exp.html"); 
+		      //location.replace('report.html'); 
+		      //windown.location.href = "file:///android_asset/www/report.html";
+		      //navigator.systemNotification.createStatusBarNotification("Timer", d.toString(), "Ticket Text");
+		}
+		
+		
+		setTimeout( "doSomething()", 4 * 1000 );
+		
 		
 		// file writing
 		

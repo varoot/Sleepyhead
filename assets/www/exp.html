@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.0.1.min.js"></script>
     <script type="text/javascript" src="js/mobiscroll-1.5.3.min.js"></script>
+    <script type="text/javascript" src="js/SystemNotification.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		document.addEventListener("deviceready", onDeviceReady, false);
 		var db;
@@ -29,6 +30,8 @@
 		function onDeviceReady() {
 			db = window.openDatabase("sleepyhead", "1.0", "Sleepyhead DB", 1000000);
 			db.transaction(createDB, errorCB, successCB);
+			
+			notifyUser();
 		}
 		
 		$(function() {
@@ -41,6 +44,8 @@
 				}
 			});
 		});
+	
+
 		
 		// write the input to file
 		function doSubmit(){
@@ -92,7 +97,22 @@
 			
 			
 			MyWriteToFile("Energy" + "," + timeString + "," + energyLevel + "," + noteText + "\n");
+			
+			// clear the notification
+			//cancelNotification
+			navigator.systemNotification.cancelNotification();
 		}
+		
+	    function notifyUser(){
+              navigator.systemNotification.createStatusBarNotification("SleepyHead Report", "Please report your energy level" , "SleepyHead needs your attention!");
+              //navigator.notification.beep(1);
+              navigator.notification.vibrate( 3 * 1000)
+        }
+				
+	      
+        function onLoad(){
+            document.addEventListener("deviceready", onDeviceReady, true);
+        }
 		
 		
 		// file writing
@@ -145,7 +165,7 @@
 		}
 	</script>
 </head>
-<body>
+<body  onload="onLoad();">
 	<div data-role="page" id="page1">
 		<div data-theme="a" data-role="header" data-position="fixed">
 			<h3>
@@ -153,7 +173,7 @@
 			</h3>
 		</div>
 		<div data-role="content">
-			<form url="" action="POST">
+			<form url="./self_report.html" action="POST">
 				<div data-role="fieldcontain">
 					<label for="energy">
 						Energy Level:
