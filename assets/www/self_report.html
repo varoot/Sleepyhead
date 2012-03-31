@@ -5,10 +5,11 @@
 	<link rel="stylesheet" href="jquery.mobile-1.0.1.min.css">
 	<link rel="stylesheet" href="mobiscroll-1.5.3.min.css">
 	<link rel="stylesheet" href="style.css">
-	<script type="text/javascript" charset="utf-8" src="js/phonegap-1.4.1.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/cordova-1.5.0.js"></script>
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.0.1.min.js"></script>
     <script type="text/javascript" src="js/mobiscroll-1.5.3.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/SystemNotification.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		document.addEventListener("deviceready", onDeviceReady, false);
 		var db;
@@ -69,18 +70,7 @@
 			MyWriteToFile(activityText + "," + startDateText + "," + endDateText + "," + noteText + "\n");
 		}
 		
-		function doSomething ( )
-		{
-		      var d = new Date();
-		      //navigator.notification.alert("Timer: " + d.toString());
-		      navigator.app.loadUrl("file:///android_asset/www/exp.html"); 
-		      //location.replace('report.html'); 
-		      //windown.location.href = "file:///android_asset/www/report.html";
-		      //navigator.systemNotification.createStatusBarNotification("Timer", d.toString(), "Ticket Text");
-		}
-		
-		
-		setTimeout( "doSomething()", 4 * 1000 );
+
 		
 		
 		// file writing
@@ -131,6 +121,19 @@
 			alert("getFileFail:" + error);
 		    console.log(error.code);
 		}
+		
+		function doSomething ( )
+		{
+		      var d = new Date();
+		      //navigator.notification.alert("Timer: " + d.toString());
+		      navigator.app.loadUrl("file:///android_asset/www/exp.html"); 
+		      //location.replace('report.html'); 
+		      //windown.location.href = "file:///android_asset/www/report.html";
+		      //navigator.systemNotification.createStatusBarNotification("Timer", d.toString(), "Ticket Text");
+		}
+		
+		
+		setTimeout( "doSomething()", 4 * 1000 );
 	</script>
 </head>
 <body>
@@ -141,7 +144,7 @@
 			</h3>
 		</div>
 		<div data-role="content">
-			<form url="" action="POST">
+			<form url="./exp.html" action="POST">
 				<div data-role="fieldcontain">
 					<label for="activity">
 						Activity:

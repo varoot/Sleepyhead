@@ -1,8 +1,8 @@
 package com.phonegap.sleepyhead;
 
-import android.os.Bundle;
+import org.apache.cordova.DroidGap;
 
-import com.phonegap.DroidGap;
+import android.os.Bundle;
 
 public class App extends DroidGap {
     /** Called when the activity is first created. */

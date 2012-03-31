@@ -16,6 +16,7 @@ import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 
 
+
 public class SystemNotification extends Plugin {
 
     final int notif_ID = 1234;

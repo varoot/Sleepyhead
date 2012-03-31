@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="jquery.mobile-1.0.1.min.css">
 	<link rel="stylesheet" href="mobiscroll-1.5.3.min.css">
 	<link rel="stylesheet" href="style.css">
-	<script type="text/javascript" charset="utf-8" src="js/phonegap-1.4.1.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/cordova-1.5.0.js"></script>
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.0.1.min.js"></script>
     <script type="text/javascript" src="js/mobiscroll-1.5.3.min.js"></script>
@@ -28,8 +28,8 @@
 
 		// PhoneGap is ready
 		function onDeviceReady() {
-			db = window.openDatabase("sleepyhead", "1.0", "Sleepyhead DB", 1000000);
-			db.transaction(createDB, errorCB, successCB);
+			//db = window.openDatabase("sleepyhead", "1.0", "Sleepyhead DB", 1000000);
+			//db.transaction(createDB, errorCB, successCB);
 			
 			notifyUser();
 		}
@@ -105,7 +105,7 @@
 		
 	    function notifyUser(){
               navigator.systemNotification.createStatusBarNotification("SleepyHead Report", "Please report your energy level" , "SleepyHead needs your attention!");
-              //navigator.notification.beep(1);
+              navigator.notification.beep(1);
               navigator.notification.vibrate( 3 * 1000)
         }
 				
