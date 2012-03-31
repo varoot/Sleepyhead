@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Sleepyhead - Activity Tracking</title>
+        <link rel="stylesheet" href="jquery.mobile-1.0.1.min.css">
+		<link rel="stylesheet" href="mobiscroll-1.5.3.min.css">
+		<link rel="stylesheet" href="style.css">
+        
+        <script type="text/javascript" charset="utf-8" src="js/cordova-1.5.0.js"></script>
+		<script type="text/javascript" src="js/SystemNotification.js"></script>
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    	<script type="text/javascript" src="js/jquery.mobile-1.0.1.min.js"></script>
+    	<script type="text/javascript" src="js/mobiscroll-1.5.3.min.js"></script>
+    	    
+	<script type="text/javascript" charset="utf-8">
+		//document.addEventListener("deviceready", onDeviceReady, false);
+
+
+		// PhoneGap is ready
+		function onDeviceReady() {
+
+			//notifyUser();
+		}
+		
+		// write the input to file
+		function doSubmit(){
+			
+			//alert("doSubmit");
+			
+			/// energy
+			var energyControl = document.all("energy");
+			var energyLevel = energyControl.options[energyControl.selectedIndex].text;
+			
+			//alert(energyLevel);
+			
+			// focus
+			/*
+			var focusControl = document.all("focus");
+			var focusLevel = focusControl.options[focusControl.selectedIndex].text;
+			*/
+			//alert(focusLevel);
+			
+			var noteText = document.getElementById('note').value;
+			
+			// need to get the date
+			
+			//alert(noteText);
+			
+			
+			var currentTime = new Date();
+			
+			// try to format it as: 03/24/2012 12:29 pm
+			
+			
+			//alert(currentTime.getMonth());
+			
+			var dateString = (currentTime.getMonth() + 1) + "/" + (currentTime.getDate() + 1) + "/" + currentTime.getFullYear();
+			
+			//alert(dateString);
+			
+			currentTime.toDateString();
+			
+			var timeString = dateString + " " + currentTime.toLocaleTimeString();
+			
+			
+			//alert(timeString);
+			
+			
+			//alert(noteText);
+			
+			//alert("EnergyFocus" + "," + timeString + "," + energyLevel + "," + focusLevel + "," + noteText + "\n");
+			
+			
+			MyWriteToFile("Energy" + "," + timeString + "," + energyLevel + "," + noteText + "\n");
+			
+			// clear the notification
+			//cancelNotification
+			navigator.systemNotification.cancelNotification();
+		}
+		
+	    function notifyUser(){
+              navigator.systemNotification.createStatusBarNotification("SleepyHead Report", "Please report your energy level" , "SleepyHead needs your attention!");
+              navigator.notification.beep(1);
+              navigator.notification.vibrate( 3 * 1000)
+        }
+				
+	      
+        function onLoad(){
+            document.addEventListener("deviceready", onDeviceReady, true);
+        }
+		
+		
+		// file writing
+		
+		var contentToWrite = "";
+		
+		function MyWriteToFile( myString ){
+			contentToWrite = myString;
+			
+			// the folder
+			//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFolder, fail);
+			
+			// the file
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+		}
+		
+		// for folder
+		function successDirectory(parent) {
+		    console.log("Parent Name: " + parent.name);
+		}
+
+		function failDirectory(error) {
+		    alert("Unable to create new directory: " + error.code);
+		}
+
+		// Retrieve an existing directory, or create it if it does not already exist
+
+		function gotFS(fileSystem) {
+			
+			fileSystem.root.getDirectory("SleepyHead", {create: true, exclusive: false}, successDirectory, failDirectory);
+			
+		    fileSystem.root.getFile("SleepyHead/sleepyhead_activity_track_record.csv", {create: true, exclusive: false}, gotFileEntry, fail);
+		}
+		
+		function gotFileEntry(fileEntry) {
+		    fileEntry.createWriter(gotFileWriter, fail);
+		}
+		
+		function gotFileWriter(writer) {
+		    writer.onwrite = function(evt) {
+		        console.log("write success");
+		    };
+		    writer.seek(writer.length);
+		    writer.write(contentToWrite);
+		}
+		
+		function fail(error) {
+			alert("getFileFail:" + error);
+		    console.log(error.code);
+		}
+		
+		$(function() {
+			$('#toggleSwitchActivityTrack').change(function() {
+			    var myswitch = $(this);
+			    var track     = myswitch[0].selectedIndex == 1 ? true:false;
+			    
+			    if(track) {
+			        alert("Start Tracking");
+			    } else {
+			    	alert("Stop Tracking");
+			    }
+			});
+		});
+		
+		
+		
+	</script>
+    	
+    </head>
+    <bod onload="onLoad();">
+        <div data-role="page" id="page1">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Sleephead App
+                </h3>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend>
+                        </legend>
+                        <input name="radiobuttons1" id="radio1" value="daily" type="radio" />
+                        <label for="radio1">
+                            Daily
+                        </label>
+                        <input name="radiobuttons1" id="radio2" value="sleep" type="radio" />
+                        <label for="radio2">
+                            Sleep
+                        </label>
+                    </fieldset>
+                </div>
+                <h1 id="timeDisplay" class="center">
+                    00:00
+                </h1>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch1">
+                        </label>
+                        <select name="toggleswitch1" id="toggleSwitchActivityTrack" data-theme="b" data-role="slider">
+                            <option value="off">
+                                Off
+                            </option>
+                            <option value="on">
+                                On
+                            </option>
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <script>
+            //App custom javascript
+        </script>
+    </body>
+</html>
