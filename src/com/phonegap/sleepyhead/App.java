@@ -11,6 +11,6 @@ public class App extends DroidGap {
         super.onCreate(savedInstanceState);
         super.loadUrl("file:///android_asset/www/self_report.html");
         //super.loadUrl("file:///android_asset/www/exp.html");
-        super.addService("systemNotification","com.phonegap.helloworld.SystemNotification");
+        super.addService("systemNotification","com.phonegap.sleepyhead.SystemNotification");
     }
 }
