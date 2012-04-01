@@ -65,10 +65,13 @@ void loadData(String date) {
 void setup() {
 	size(canvasWidth, canvasHeight);
 	background(#ffffff);
-	loadData("3/28/2012");
+}
+
+void draw() {
+	loadData("4/01/2012");
+
 	fill(lightBlue);
 	noStroke();
-
 	beginShape();
 	vertex(plotX(0), plotY(0));
 	plotVertex(energyLevels);
