@@ -46,6 +46,16 @@
 		});
 	
 
+		function pad(number, length) {
+			   
+		    var str = '' + number;
+		    while (str.length < length) {
+		        str = '0' + str;
+		    }
+		   
+		    return str;
+
+		}
 		
 		// write the input to file
 		function doSubmit(){
@@ -79,7 +89,7 @@
 			
 			//alert(currentTime.getMonth());
 			
-			var dateString = (currentTime.getMonth() + 1) + "/" + (currentTime.getDate() + 1) + "/" + currentTime.getFullYear();
+			var dateString = pad((currentTime.getMonth() + 1),2) + "/" + pad((currentTime.getDate()),2) + "/" + currentTime.getFullYear();
 			
 			//alert(dateString);
 			
