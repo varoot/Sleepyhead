@@ -4,7 +4,6 @@ color lightBlue = color(#66bbcc);
 color deepBlue = color(#334499);
 
 final int energyLevelMax = 7;
-String dataExp = "data/sleepyhead_exp_record.csv";
 
 /* Canvas */
 final int canvasWidth = 290;
@@ -52,7 +51,7 @@ void plotVertex(e) {
 }
 
 void loadData(String date) {
-	String[] exp = loadStrings(dataExp);
+	String[] exp = split(expData, "\n");
 	for (int i = 0; i < exp.length(); i++) {
 		String[] tokens = split(exp[i], ",");
 		String[] dt = split(tokens[1], " ");
