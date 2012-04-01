@@ -67,11 +67,12 @@ void setup() {
 	background(#ffffff);
 }
 
-void draw() {
-	loadData("4/01/2012");
-
+void drawData() {
 	fill(lightBlue);
 	noStroke();
+
+	loadData("4/1/2012");
+/*
 	beginShape();
 	vertex(plotX(0), plotY(0));
 	plotVertex(energyLevels);
@@ -83,5 +84,5 @@ void draw() {
 	noFill();
 	beginShape();
 	plotVertex(energyLevels);
-	endShape();
+	endShape();*/
 }

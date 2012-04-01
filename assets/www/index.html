@@ -15,20 +15,10 @@
 		var expFile = 'SleepyHead/sleepyhead_exp_record.csv';
 		var expData = '';
 		
-		$('#visualization').live('pageinit', function(event) {
-			if (!processingInstance) {
-				processingInstance = Processing.getInstanceById('vis');
-			}
+		if (!processingInstance) {
+			processingInstance = Processing.getInstanceById('vis');
+		}
 			
-			var reader = new FileReader();
-			reader.onloadend = function(e) {
-				expData = e.target.result;
-				processingInstance.draw();					
-			};
-			
-			reader.readAsText(expFile);
-		});
-	
 		document.addEventListener("deviceready", onDeviceReady, false);
 		var db;
 		//this is test comment
@@ -46,60 +36,6 @@
 
 		// PhoneGap is ready
 		function onDeviceReady() {
-			db = window.openDatabase("sleepyhead", "1.0", "Sleepyhead DB", 1000000);
-			db.transaction(createDB, errorCB, successCB);
-		}
-		
-		$(function() {
-			$("input[id|=date]").scroller({ preset: 'datetime', theme: 'ios' });
-			$("#activity").change(function() {
-				if ($(this).children('option[selected]').eq(0).hasClass('duration')) {
-					$("#input-date-end").show();
-				} else {
-					$("#input-date-end").hide();
-				}
-			});
-		});
-		
-		// write the input to file
-		function doSubmit(){
-			
-			
-			var activityList = document.all("activity");
-			var activityText = activityList.options[activityList.selectedIndex].text;
-			
-			//alert(activityText);
-			
-			var startDateText = document.getElementById('date-start').value;
-			
-			//alert(startDateText);
-			
-			var endDateText = document.getElementById('date-end').value;
-			
-			//alert(endDateText);
-			
-			var noteText = document.getElementById('note').value;
-			
-			//alert(noteText);
-			
-			//alert(activityText + "\n" + startDateText + "\n" + endDateText + "\n" + noteText);
-			
-			
-			MyWriteToFile(activityText + "," + startDateText + "," + endDateText + "," + noteText + "\n");
-		}
-		
-		
-		// file writing
-		
-		var contentToWrite = "";
-		
-		function MyWriteToFile( myString ){
-			contentToWrite = myString;
-			
-			// the folder
-			//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFolder, fail);
-			
-			// the file
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 		}
 		
@@ -112,25 +48,27 @@
 		    alert("Unable to create new directory: " + error.code);
 		}
 
-		// Retrieve an existing directory, or create it if it does not already exist
-
 		function gotFS(fileSystem) {
-			
 			fileSystem.root.getDirectory("SleepyHead", {create: true, exclusive: false}, successDirectory, failDirectory);
+			fileSystem.root.getFile(expFile, {create: true, exclusive: false}, gotExpFileEntry, fail);
+		}
+		
+		function gotExpFileEntry(fileEntry) {
+			fileEntry.file(gotExpFile, fail);
+		}
+		
+		function gotExpFile(file) {
+			var reader = new FileReader();
+			reader.onloadend = function(e) {
+				expData = e.target.result;
+				if (!processingInstance) {
+					processingInstance = Processing.getInstanceById('vis');
+				}
+				processingInstance.drawData();					
+				alert('Exp: '+e.target.result);
+			};
 			
-		    fileSystem.root.getFile("SleepyHead/sleepyhead_record.csv", {create: true, exclusive: false}, gotFileEntry, fail);
-		}
-		
-		function gotFileEntry(fileEntry) {
-		    fileEntry.createWriter(gotFileWriter, fail);
-		}
-		
-		function gotFileWriter(writer) {
-		    writer.onwrite = function(evt) {
-		        console.log("write success");
-		    };
-		    writer.seek(writer.length);
-		    writer.write(contentToWrite);
+			reader.readAsText(file);
 		}
 		
 		function fail(error) {
