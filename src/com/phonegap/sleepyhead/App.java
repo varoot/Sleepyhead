@@ -10,7 +10,8 @@ public class App extends DroidGap {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.loadUrl("file:///android_asset/www/index.html");
-        //super.loadUrl("file:///android_asset/www/exp.html");
+        super.loadUrl("file:///android_asset/www/exp.html");
+        //super.loadUrl("file:///android_asset/www/activity_track.html");
         super.addService("systemNotification","com.phonegap.sleepyhead.SystemNotification");
     }
 }
