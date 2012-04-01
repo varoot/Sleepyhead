@@ -20,7 +20,7 @@
 
 		// PhoneGap is ready
 		function onDeviceReady() {
-
+			
 			//notifyUser();
 		}
 		
@@ -153,6 +153,58 @@
 			    }
 			});
 		});
+		
+		// acelerometer
+		var startTrackingDate;
+		var stopTrackingDate;
+		
+		
+		function startAccelerometerTracking(){
+			startTrackingDate = new Date();
+		}
+		
+		function stopAccelerometerTracking(){
+			stopTrackingDate = new Date();
+		}
+		
+	    function onAccelerometerSuccess(acceleration) {
+	        alert('Acceleration X: ' + acceleration.x + '\n' +
+	              'Acceleration Y: ' + acceleration.y + '\n' +
+	              'Acceleration Z: ' + acceleration.z + '\n' +
+	              'Timestamp: '      + acceleration.timestamp + '\n');
+	        
+	        var result = "";
+	        
+	        var rms = Math.sqrt(Math.pow(acceleration.x,2) + Math.pow(acceleration.y,2) + Math.pow(acceleration.z,2));
+	        
+	        
+	        
+	        result = "Acceleration," + aceleration.timestamp + "," + acceleration.x + "," + acceleration.y + "," + acceleration.z + "," + rms;
+	        
+	        MyWriteToFile(result);
+	    }
+
+	    // onError: Failed to get the acceleration
+	    //
+	    function onAccelerometerError() {
+	        alert('onAccelerameterError!');
+	    }
+	    
+		function doAccelerometerRecording( )
+		{
+			navigator.accelerometer.getCurrentAcceleration(onAccelerometerSuccess, onAccelerometerError);
+			
+		      var d = new Date();
+		      //navigator.notification.alert("Timer: " + d.toString());
+		      navigator.app.loadUrl("file:///android_asset/www/exp.html"); 
+		      //location.replace('report.html'); 
+		      //windown.location.href = "file:///android_asset/www/report.html";
+		      //navigator.systemNotification.createStatusBarNotification("Timer", d.toString(), "Ticket Text");
+		}
+		
+		
+		setInterval( "doAccelerometerRecording", 4 * 1000 );
+
 		
 		
 		
