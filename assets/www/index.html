@@ -22,7 +22,7 @@
 			
 			var reader = new FileReader();
 			reader.onloadend = function(e) {
-				expData = evt.target.result;
+				expData = e.target.result;
 				processingInstance.draw();					
 			};
 			
