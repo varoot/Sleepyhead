@@ -128,25 +128,31 @@
 	</script>
 </head>
 <body>
-	<div data-role="page" id="home">
+	<div data-role="page" data-theme="b" id="home">
 		<div data-theme="a" data-role="header" data-position="fixed">
-			<h1>Sleepyhead App</h1>
+			<h3>Sleepyhead App</h3>
 		</div>
 		<div data-role="content">
 			<div>
-				<a href="exp.html">Experience Sampling</a>
+				<a data-role="button" href="exp.html" data-icon="arrow-r" data-iconpos="right">
+                    Experience Sampling
+                </a>
 			</div>
 			<div>
-				<a href="self_report.html">Self Report</a>
+				<a data-role="button" href="self_report.html" data-icon="arrow-r" data-iconpos="right">
+                    Self Report
+                </a>
 			</div>
 			<div>
-				<a href="#visualization">Visualization</a>
+				<a data-role="button" href="#visualization" data-icon="arrow-r" data-iconpos="right">
+                    Visualization
+                </a>
 			</div>
 		</div>
 	</div>
 	<div data-role="page" id="visualization" data-add-back-btn="true">
 		<div data-role="header" data-position="fixed">
-			<h1>Visualization</h1>
+			<h3>Visualization</h3>
 		</div>
 		<div data-role="content">
 			<canvas data-processing-sources="chart.pde"></canvas>
