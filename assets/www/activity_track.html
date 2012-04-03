@@ -275,7 +275,7 @@
 	        
 	        var result = "";
 	        
-	        var rms = Math.sqrt(Math.pow(acceleration.x,2) + Math.pow(acceleration.y,2) + Math.pow(acceleration.z,2));
+	        var rms = Math.sqrt((Math.pow(acceleration.x,2) + Math.pow(acceleration.y,2) + Math.pow(acceleration.z,2))/3);
 	        
 	        /*
 	        alert('Acceleration X: ' + acceleration.x + '\n' +
