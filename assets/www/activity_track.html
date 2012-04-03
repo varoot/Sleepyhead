@@ -299,8 +299,12 @@
 			currentTime.toDateString();
 			
 			var timeString = dateString + " " + currentTime.toLocaleTimeString();
+			
+			
+			var timeStampString = acceleration.timestamp + "";
+			//alert(timeStampString);
 	        
-	        result = "Acceleration," + timeString + ","+ acceleration.timestamp + ","  + acceleration.x + "," + acceleration.y + "," + acceleration.z + "," + rms;
+	        result = timeString + ","+ timeStampString + ","  + acceleration.x + "," + acceleration.y + "," + acceleration.z + "," + rms;
 	        
 	        //alert(result);
 	        
