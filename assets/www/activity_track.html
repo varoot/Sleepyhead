@@ -20,8 +20,8 @@
 
 		// PhoneGap is ready
 		function onDeviceReady() {
-			
-			//notifyUser();
+			//alert("onDeviceReady");
+			generateStatusBarNotification("SleepyHead", "running" , "Your activity tracking assistant.");
 		}
 		
 		// write the input to file
@@ -73,17 +73,36 @@
 			//alert("EnergyFocus" + "," + timeString + "," + energyLevel + "," + focusLevel + "," + noteText + "\n");
 			
 			
-			MyWriteToFile("Energy" + "," + timeString + "," + energyLevel + "," + noteText + "\n");
+			//MyWriteToFile("Energy" + "," + timeString + "," + energyLevel + "," + noteText + "\n");
+			
+			MyWriteToFile(timeString + "," + energyLevel + "," + noteText + "\n");
+			
 			
 			// clear the notification
 			//cancelNotification
-			navigator.systemNotification.cancelNotification();
+			cancelStatusBarNotification();
+			
+		}
+		
+		function generateStatusBarNotification( title, message, tickerText){
+			navigator.systemNotification.createStatusBarNotification(title, message, tickerText);
+			
+		}
+		
+		function updateStatusBarNotification(contentText, tickerText, number){
+			navigator.systemNotification.updateNotification(contentText, tickerText, number);
+		}
+		
+		function cancelStatusBarNotification(message){
+
+			navigator.systemNotification.cancelNotification(message);
+			
 		}
 		
 	    function notifyUser(){
-              navigator.systemNotification.createStatusBarNotification("SleepyHead Report", "Please report your energy level" , "SleepyHead needs your attention!");
-              navigator.notification.beep(1);
-              navigator.notification.vibrate( 3 * 1000)
+	    	generateStatusBarNotification("SleepyHead Report", "Please report your energy level" , "SleepyHead needs your attention!");
+            navigator.notification.beep(1);
+            navigator.notification.vibrate( 3 * 1000)
         }
 				
 	      
@@ -235,13 +254,20 @@
 			startTrackingDate = new Date();
 			//intervalId = setInterval( "doAccelerometerRecording()", 4 * 1000 );
 			secondCount = 0;
+			
 			intervalId = setInterval( "doTimer()", 500 );
 			//alert("after setInterval");
+			cancelStatusBarNotification();
+			generateStatusBarNotification("SleepyHead", "running" , "Your activity being tracked.");
+			//updateStatusBarNotification("running", "activity tracking start", 1);
 		}
 		
 		function stopAccelerometerTracking(){
 			stopTrackingDate = new Date();
 			clearInterval(intervalId);
+			//cancelStatusBarNotification("running");
+			cancelStatusBarNotification();
+			generateStatusBarNotification("SleepyHead", "running" , "Your activity tracking assistant.");
 		}
 		
 	    function onAccelerometerSuccess(acceleration) {
@@ -296,7 +322,7 @@
 	</script>
     	
     </head>
-    <bod onload="onLoad();">
+    <body onload="onLoad();">
         <div data-role="page" id="page1">
             <div data-theme="a" data-role="header">
                 <h3>

@@ -21,13 +21,16 @@ SystemNotification.prototype.onForeground = function () {
     this.disableNotification();
 };
 
+var existingTitle = "";
+
 SystemNotification.prototype.createStatusBarNotification = function (contentTitle, contentText, tickerText) {
+	existingTitle = contentTitle;
     PhoneGap.exec(null, null, "systemNotification", "createStatusBarNotification", [contentTitle, contentText, tickerText]);
 };
 
 SystemNotification.prototype.updateNotification = function (contentText, tickerText, number) {
     this.newCount++;
-    var contentTitle = "my title";
+    var contentTitle = existingTitle;
     if (this.newCount === 1) {
         this.createStatusBarNotification(contentTitle, contentText, tickerText);
     } else {
@@ -43,7 +46,7 @@ SystemNotification.prototype.cancelNotification = function (contentText) {
     }
     else {
 	//updating the notification
-        var contentTitle = "my title";
+        var contentTitle = existingTitle;
         PhoneGap.exec(null, null, "systemNotification", "updateNotification", [contentTitle, contentText, this.newCount]);
     }
 };

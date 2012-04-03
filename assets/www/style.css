@@ -12,4 +12,19 @@ H1.center {
 
 .ui-page {
     -webkit-backface-visibility: hidden;
+
+#heaer {
+	background-color:#222222;
+}
+
+#header_1 {
+	padding: 5px;
+	text-align: left;
+	float:left;
+	width:100px;
+}
+
+#header_2 {
+	padding: 5px;
+	text-align: left;
 }
