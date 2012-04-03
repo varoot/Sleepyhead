@@ -9,3 +9,7 @@ html, body {
 H1.center {
 	text-align: center
 }
+
+.ui-page {
+    -webkit-backface-visibility: hidden;
+}

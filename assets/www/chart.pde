@@ -51,28 +51,31 @@ void plotVertex(e) {
 }
 
 void loadData(String date) {
+	energyLevels.clear();
 	String[] exp = split(expData, "\n");
 	for (int i = 0; i < exp.length(); i++) {
+		if (exp[i] == "") continue;
 		String[] tokens = split(exp[i], ",");
+		if (tokens.length < 3) continue;
 		String[] dt = split(tokens[1], " ");
 		if (dt[0] != date) continue;
 		String[] hms = split(dt[1], ":");
 		int t = (int(hms[0])*60+int(hms[1]))*60+int(hms[2]);
-		energyLevels.add(new EnergyLevel(t/86400, tokens[2]));
+		energyLevels.add(new EnergyLevel(t/86400, (int) tokens[2]));
 	}
 }
 
 void setup() {
 	size(canvasWidth, canvasHeight);
-	background(#ffffff);
+	noLoop();
 }
 
-void drawData() {
+void draw() {
+	background(#ffffff);
+	
 	fill(lightBlue);
 	noStroke();
 
-	loadData("4/1/2012");
-/*
 	beginShape();
 	vertex(plotX(0), plotY(0));
 	plotVertex(energyLevels);
@@ -82,7 +85,13 @@ void drawData() {
 	stroke(deepBlue);
 	strokeWeight(2);
 	noFill();
+	
 	beginShape();
 	plotVertex(energyLevels);
-	endShape();*/
+	endShape();
+}
+
+void drawData(selDate) {
+	loadData(selDate);
+	redraw();
 }
