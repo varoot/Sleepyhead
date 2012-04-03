@@ -73,7 +73,10 @@
 			//alert("EnergyFocus" + "," + timeString + "," + energyLevel + "," + focusLevel + "," + noteText + "\n");
 			
 			
-			MyWriteToFile("Energy" + "," + timeString + "," + energyLevel + "," + noteText + "\n");
+			//MyWriteToFile("Energy" + "," + timeString + "," + energyLevel + "," + noteText + "\n");
+			
+			MyWriteToFile(timeString + "," + energyLevel + "," + noteText + "\n");
+			
 			
 			// clear the notification
 			//cancelNotification
