@@ -9,3 +9,16 @@ html, body {
 H1.center {
 	text-align: center
 }
+#heaer {
+	background-color:#222222;
+}
+#header_1 {
+	padding: 5px;
+	text-align: left;
+	float:left;
+	width:100px;
+}
+#header_2 {
+	padding: 5px;
+	text-align: left;
+}
