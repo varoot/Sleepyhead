@@ -138,15 +138,27 @@
 		// file writing
 		
 		var contentToWrite = "";
+		var writeCount = 0;
 		
-		function MyWriteToFile( myString ){
-			contentToWrite = myString;
-			
+		function MyWriteToFile( myString, count){
+			contentToWrite = contentToWrite + myString;
+			writeCount = writeCount + count;
 			// the folder
 			//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFolder, fail);
 			
 			// the file
-			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+			if( count == 0){
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+				writeCount = 0;
+			}
+			else if( writeCount >= 50 ){
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+				writeCount = 0;
+			}
+			else{
+				
+			}
+			
 		}
 		
 		// for folder
@@ -177,6 +189,7 @@
 		    };
 		    writer.seek(writer.length);
 		    writer.write(contentToWrite);
+		    contentToWrite = "";
 		}
 		
 		function fail(error) {
@@ -242,7 +255,7 @@
 			
 			//alert(timeResult);
 			
-			document.getElementById('timeDisplay').innerHTML = timeResult;
+			//document.getElementById('timeDisplay').innerHTML = timeResult;
 			//$('#timeDisplay').value = timeResult;
 			
 			navigator.accelerometer.getCurrentAcceleration(onAccelerometerSuccess, onAccelerometerError);
@@ -258,11 +271,24 @@
 			
 		}
 		
+		
+		var prevX = 0;
+		var prevY = 0;
+		var prevZ = 0;
+		
+		var initialTimeStamp = 0;
+		
 		function startAccelerometerTracking(){
 			//alert("startAccelerometerTracking");
 			startTrackingDate = new Date();
 			//intervalId = setInterval( "doAccelerometerRecording()", 4 * 1000 );
 			secondCount = 0;
+			
+			
+			prevX = 0;
+			prevY = 0;
+			prevZ = 0;
+			initialTimeStamp = 0;
 			
 			intervalId = setInterval( "doTimer()", 500 );
 			//alert("after setInterval");
@@ -276,15 +302,27 @@
 			clearInterval(intervalId);
 			//cancelStatusBarNotification("running");
 			cancelStatusBarNotification();
+			MyWriteToFile("", 0);
 			generateStatusBarNotification("SleepyHead", "running" , "Your activity tracking assistant.");
 		}
+
 		
 	    function onAccelerometerSuccess(acceleration) {
 	        
 	        
 	        var result = "";
 	        
-	        var rms = Math.sqrt((Math.pow(acceleration.x,2) + Math.pow(acceleration.y,2) + Math.pow(acceleration.z,2))/3);
+	        var deltaX = acceleration.x - prevX;
+	        var deltaY = acceleration.y - prevY;
+	        var deltaZ = acceleration.z - prevZ;
+	        
+	        var deltaRMS = Math.sqrt((Math.pow(deltaX,2) + Math.pow(deltaY,2) + Math.pow(deltaZ,2))/3);
+	        
+	        if( initialTimeStamp == 0){
+	        	initialTimeStamp = acceleration.timestamp;
+	        }
+	        
+	        //var rms = Math.sqrt((Math.pow(acceleration.x,2) + Math.pow(acceleration.y,2) + Math.pow(acceleration.z,2))/3);
 	        
 	        /*
 	        alert('Acceleration X: ' + acceleration.x + '\n' +
@@ -293,6 +331,20 @@
 		              'Timestamp: '      + acceleration.timestamp + '\n'+
 		              'RMS: ' + rms);
 	        */
+	        
+	        var sensorResult = "";
+	        
+	        sensorResult = "Time   :" + (acceleration.timestamp - initialTimeStamp) + '<br />'
+	        			 + "Delta X:" + deltaX + '<br />'
+	        			 + "Delta Y:" + deltaY + '<br />'
+	        			 + "Delta Z:" + deltaZ + '<br />'
+	        			 + "RMS    :" + deltaRMS;
+	        
+	        document.getElementById('timeDisplay').innerHTML = sensorResult;
+	        
+	        prevX = acceleration.x;
+	        prevY = acceleration.y;
+	        prevZ = acceleration.z;
 	        
 	        var currentTime = new Date();
 			
@@ -310,14 +362,23 @@
 			var timeString = dateString + " " + currentTime.toLocaleTimeString();
 			
 			
-			var timeStampString = acceleration.timestamp + "";
+			//var timeStampString = acceleration.timestamp + "";
+			//acceleration.timestamp - initialTimeStamp
+			var timeStampString = (acceleration.timestamp - initialTimeStamp) + "";
+			
+			
 			//alert(timeStampString);
 	        
-	        result = timeString + ","+ timeStampString + ","  + acceleration.x + "," + acceleration.y + "," + acceleration.z + "," + rms;
+	        result = timeString + ","+ timeStampString + ","  + deltaX + "," + deltaY + "," + deltaZ + "," + deltaRMS;
+	        
+	        //result = timeString + ","+ timeStampString + "," + deltaRMS;
 	        
 	        //alert(result);
 	        
-	        MyWriteToFile(result + "\n");
+	        MyWriteToFile("|," + result + "\n", 1);
+	        
+
+	        
 	    }
 		
 		
