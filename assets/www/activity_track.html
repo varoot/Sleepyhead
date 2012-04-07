@@ -16,6 +16,34 @@
     	    
 	<script type="text/javascript" charset="utf-8">
 		//document.addEventListener("deviceready", onDeviceReady, false);
+		
+		$(document).ready(function() {
+			$('#sleep_track').hide();
+			$('#day_track').show();
+			
+			$('#toggleSwitchActivityTrack').change(function() {
+			    var myswitch = $(this);
+			    var track     = myswitch[0].selectedIndex == 1 ? true:false;
+			    
+			    if(track) {
+			        //alert("Start Tracking");
+			        startAccelerometerTracking();
+			    } else {
+			    	//alert("Stop Tracking");
+			    	stopAccelerometerTracking()
+			    }
+			});
+			
+			$('#radio1').click(function() {
+				$('#sleep_track').hide();
+				$('#day_track').show();
+			});
+			
+			$('#radio2').click(function() {
+				$('#sleep_track').show();
+				$('#day_track').hide();
+			});
+		});
 
 
 		// PhoneGap is ready
@@ -159,34 +187,6 @@
 			alert("getFileFail:" + error);
 		    console.log(error.code);
 		}
-		
-		$(function() {
-			$('#sleep_track').hide();
-			$('#day_track').show();
-			
-			$('#toggleSwitchActivityTrack').change(function() {
-			    var myswitch = $(this);
-			    var track     = myswitch[0].selectedIndex == 1 ? true:false;
-			    
-			    if(track) {
-			        //alert("Start Tracking");
-			        startAccelerometerTracking();
-			    } else {
-			    	//alert("Stop Tracking");
-			    	stopAccelerometerTracking()
-			    }
-			});
-			
-			$('#radio1').click(function() {
-				$('#sleep_track').hide();
-				$('#day_track').show();
-			});
-			
-			$('#radio2').click(function() {
-				$('#sleep_track').show();
-				$('#day_track').hide();
-			});
-		});
 		
 		// acelerometer
 		var startTrackingDate;
