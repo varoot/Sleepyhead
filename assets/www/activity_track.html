@@ -46,11 +46,7 @@
 		});
 
 
-		// PhoneGap is ready
-		function onDeviceReady() {
-			//alert("onDeviceReady");
-			generateStatusBarNotification("SleepyHead", "running" , "Your activity tracking assistant.");
-		}
+		
 		
 		// write the input to file
 		function doSubmit(){
@@ -325,7 +321,11 @@
 	    }
 		
 		
-		
+		// PhoneGap is ready
+		function onDeviceReady() {
+			//alert("onDeviceReady");
+			generateStatusBarNotification("SleepyHead", "running" , "Your activity tracking assistant.");
+		}
 		
 		
 

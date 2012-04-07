@@ -34,10 +34,7 @@
 			//alert('Success');
 		}
 
-		// PhoneGap is ready
-		function onDeviceReady() {
-			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-		}
+		
 		
 		// for folder
 		function successDirectory(parent) {
@@ -82,6 +79,11 @@
 			alert("getFileFail:" + error);
 		    console.log(error.code);
 		}
+		
+		// PhoneGap is ready
+		function onDeviceReady() {
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+		}
 	</script>
 </head>
 <body>
@@ -99,22 +101,22 @@
 				<img src="images/christmas_star.png" width="20" height="20">
 			</div>
 			<div>
-				<a data-role="button" href="exp.html" data-icon="arrow-r" data-iconpos="right">
+				<a data-role="button" href="exp.html" data-icon="arrow-r" data-iconpos="right" rel="external">
                     Experience Sampling
                 </a>
 			</div>
 			<div>
-				<a data-role="button" href="self_report.html" data-icon="arrow-r" data-iconpos="right">
+				<a data-role="button" href="self_report.html" data-icon="arrow-r" data-iconpos="right" rel="external">
                     Self Report
                 </a>
 			</div>
 			<div>
-				<a data-role="button" href="#visualization" data-icon="arrow-r" data-iconpos="right">
+				<a data-role="button" href="#visualization" data-icon="arrow-r" data-iconpos="right" rel="external">
                     Visualization
                 </a>
 			</div>
 			<div>
-				<a data-role="button" href="activity_track.html" data-icon="arrow-r" data-iconpos="right">
+				<a data-role="button" href="activity_track.html" data-icon="arrow-r" data-iconpos="right" rel="external">
                     Sleep Record
                 </a>
 			</div>
