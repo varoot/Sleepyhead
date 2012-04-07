@@ -161,6 +161,9 @@
 		}
 		
 		$(function() {
+			$('#sleep_track').hide();
+			$('#day_track').show();
+			
 			$('#toggleSwitchActivityTrack').change(function() {
 			    var myswitch = $(this);
 			    var track     = myswitch[0].selectedIndex == 1 ? true:false;
@@ -172,6 +175,16 @@
 			    	//alert("Stop Tracking");
 			    	stopAccelerometerTracking()
 			    }
+			});
+			
+			$('#radio1').click(function() {
+				$('#sleep_track').hide();
+				$('#day_track').show();
+			});
+			
+			$('#radio2').click(function() {
+				$('#sleep_track').show();
+				$('#day_track').hide();
 			});
 		});
 		
@@ -310,10 +323,6 @@
 	        
 	        MyWriteToFile(result + "\n");
 	    }
-
-
-		
-		
 		
 		
 		
@@ -348,10 +357,47 @@
                         </label>
                     </fieldset>
                 </div>
-                <div class="day_track">
+                <div id="day_track">
                 	<!-- do we need to combine the input part with the tracking part -->
+                	<div data-role="content">
+						<form action="exp.html" method="POST">
+							<div data-role="fieldcontain">
+								<label for="activity">
+									Activity:
+								</label>
+								<select name="activity" id="activity">
+									<option value="1" class="duration">Alcohol</option>
+									<option value="2" class="duration">Coffee</option>
+									<option value="3" class="duration">Eating</option>
+									<option value="4">First Alarm Time</option>
+									<option value="5">Go to Bed</option>
+									<option value="6" class="duration">Lecture</option>
+									<option value="7" class="duration">Meeting</option>
+									<option value="8" class="duration">Study/Work</option>
+									<option value="9" class="duration">Take a Shower</option>
+									<option value="10" selected>Wake Up</option>
+									<option value="11" class="duration">Watching Video</option>
+									<option value="12" class="duration">Workout</option>
+									<option value="13" class="duration">Others</option>
+								</select>
+							</div>
+							<div data-role="fieldcontain">
+								<label for="date-start">Start Date/Time:</label>
+								<input type="date" name="date_start" id="date-start" class="mobiscroll">
+							</div>
+							<div data-role="fieldcontain" id="input-date-end" style="display: none">
+								<label for="date-end">End Date/Time:</label>
+								<input type="date" name="date_end" id="date-end" class="mobiscroll">
+							</div>
+							<div data-role="fieldcontain">
+								<label for="note">Note</label>
+								<textarea id="note"></textarea>
+							</div>
+							<input data-theme="b" value="Submit" type="submit" onClick="return doSubmit();">
+						</form>
+					</div>
                 </div>
-	            <div class="sleep_track">
+	            <div id="sleep_track">
 	                <h1 id="timeDisplay" class="center">
 	                    00:00:00
 	                </h1>
