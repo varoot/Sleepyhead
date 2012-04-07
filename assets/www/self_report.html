@@ -15,7 +15,7 @@
 		var db;
 		//this is test comment
 		function createDB(tx) {
-			tx.executeSql('CREATE TABLE IF NOT EXISTS data (id unique, name)');
+			//tx.executeSql('CREATE TABLE IF NOT EXISTS data (id unique, name)');
 		}
 		
 		function errorCB(err) {
@@ -28,8 +28,8 @@
 
 		// PhoneGap is ready
 		function onDeviceReady() {
-			db = window.openDatabase("sleepyhead", "1.0", "Sleepyhead DB", 1000000);
-			db.transaction(createDB, errorCB, successCB);
+			//db = window.openDatabase("sleepyhead", "1.0", "Sleepyhead DB", 1000000);
+			//db.transaction(createDB, errorCB, successCB);
 		}
 		
 		$(function() {
@@ -133,7 +133,7 @@
 		}
 		
 		
-		setTimeout( "doSomething()", 4 * 1000 );
+		//setTimeout( "doSomething()", 4 * 1000 );
 	</script>
 </head>
 <body>
