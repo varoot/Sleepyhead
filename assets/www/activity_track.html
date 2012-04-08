@@ -335,14 +335,22 @@
 	        */
 	        
 	        var sensorResult = "";
-	        
-	        sensorResult = "Time   :" + (acceleration.timestamp - initialTimeStamp) + '<br />'
+	        var deltaTime = acceleration.timestamp - initialTimeStamp;
+	        /*
+	        sensorResult = "Time   :" + deltaTime + '<br />'
 	        			 + "Delta X:" + deltaX + '<br />'
 	        			 + "Delta Y:" + deltaY + '<br />'
 	        			 + "Delta Z:" + deltaZ + '<br />'
 	        			 + "RMS    :" + deltaRMS;
 	        
 	        document.getElementById('timeDisplay').innerHTML = sensorResult;
+	        */
+	        $('#timeDisplay').text(deltaTime);
+	        var debugDiv = $('#debug');
+	        debugDiv.find('.x').text(deltaX);
+	        debugDiv.find('.y').text(deltaY);
+	        debugDiv.find('.z').text(deltaZ);
+	        debugDiv.find('.rms').text(deltaRMS);
 	        
 	        prevX = acceleration.x;
 	        prevY = acceleration.y;
@@ -366,7 +374,7 @@
 			
 			//var timeStampString = acceleration.timestamp + "";
 			//acceleration.timestamp - initialTimeStamp
-			var timeStampString = (acceleration.timestamp - initialTimeStamp) + "";
+			var timeStampString = "" + deltaTime;
 			
 			
 			//alert(timeStampString);
@@ -464,6 +472,12 @@
 	                <h1 id="timeDisplay" class="center">
 	                    00:00:00
 	                </h1>
+	                <div id="debug">
+	                	<div>X: <span class="x">0</span></div>
+	                	<div>Y: <span class="y">0</span></div>
+	                	<div>Z: <span class="z">0</span></div>
+	                	<div>RMS: <span class="rms">0</span></div>
+	                </div>
 	                <div data-role="fieldcontain">
 	                    <fieldset data-role="controlgroup">
 	                        <label for="toggleswitch1">
