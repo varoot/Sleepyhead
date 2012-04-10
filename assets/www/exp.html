@@ -51,7 +51,7 @@
 		}
 		
 		// write the input to file
-		function doSubmit(){
+		function doSubmitEXP(){
 			
 			//alert("doSubmit");
 			
@@ -162,6 +162,7 @@
 		    };
 		    writer.seek(writer.length);
 		    writer.write(contentToWrite);
+		    contentToWrite = "";
 		}
 		
 		function fail(error) {
@@ -189,7 +190,7 @@
 					<label for="note">Note</label>
 					<textarea id="note"></textarea>
 				</div>
-				<input data-theme="b" value="Submit" type="submit" onClick="return doSubmit();">
+				<input data-theme="b" value="Submit" type="submit" onClick="return doSubmitEXP();">
 			</form>
 		</div>
 	</div>
