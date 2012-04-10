@@ -56,12 +56,12 @@ void loadData(String date) {
 	for (int i = 0; i < exp.length(); i++) {
 		if (exp[i] == "") continue;
 		String[] tokens = split(exp[i], ",");
-		if (tokens.length < 3) continue;
-		String[] dt = split(tokens[1], " ");
+		if (tokens.length < 2) continue;
+		String[] dt = split(tokens[0], " ");
 		if (dt[0] != date) continue;
 		String[] hms = split(dt[1], ":");
 		int t = (int(hms[0])*60+int(hms[1]))*60+int(hms[2]);
-		energyLevels.add(new EnergyLevel(t/86400, (int) tokens[2]));
+		energyLevels.add(new EnergyLevel(t/86400, (int) tokens[1]));
 	}
 }
 
