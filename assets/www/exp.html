@@ -36,13 +36,6 @@
 		
 		$(function() {
 			$("input[id|=date]").scroller({ preset: 'datetime', theme: 'ios' });
-			$("#activity").change(function() {
-				if ($(this).children('option[selected]').eq(0).hasClass('duration')) {
-					$("#input-date-end").show();
-				} else {
-					$("#input-date-end").hide();
-				}
-			});
 		});
 	
 
@@ -63,8 +56,7 @@
 			//alert("doSubmit");
 			
 			/// energy
-			var energyControl = document.all("energy");
-			var energyLevel = energyControl.options[energyControl.selectedIndex].text;
+			var energyLevel = $("#energy").val();
 			
 			//alert(energyLevel);
 			
@@ -191,15 +183,7 @@
 					<label for="energy">
 						Energy Level:
 					</label>
-					<select name="energy" id="energy">
-						<option value="1" >1</option>
-						<option value="2" >2</option>
-						<option value="3" >3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6" >6</option>
-						<option value="7" >7</option>
-					</select>
+					<input type="range" name="energy" id="energy" value="4" min="1" max="7" />
 				</div>
 				<div data-role="fieldcontain">
 					<label for="note">Note</label>
